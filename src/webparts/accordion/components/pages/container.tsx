@@ -16,7 +16,6 @@ interface IConnectedState{
   allowZeroExpaned: boolean;
   displayMode: DisplayMode;
   sections: ISectionItem[];
-
 }
 
 const mapStateToProps = (state: IConnectedState) => {
