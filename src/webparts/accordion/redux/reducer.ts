@@ -6,6 +6,8 @@ import { DisplayMode } from '@microsoft/sp-core-library';
 const initialState: IApplicationState = {
 	title: ''
 	, showTitle: true
+	, allowMultipleExpanded: true
+	, allowZeroExpaned: true
     , displayMode: DisplayMode.Read
 	, webPartContext: undefined
 	, sections: []

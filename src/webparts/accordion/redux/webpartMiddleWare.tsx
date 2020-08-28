@@ -6,7 +6,8 @@ export const createWebPartMiddleWare = (callback) => {
         if(
             action.type === ActionTypes.ADD_SECTION || 
             action.type === ActionTypes.DELETE_SECTION ||
-            action.type === ActionTypes.UPDATE_SECTIONHEADER
+            action.type === ActionTypes.UPDATE_SECTIONHEADER ||
+            action.type === ActionTypes.UPDATE_SECTIONHTML
         ){
             callback("sections", store.getState().sections);
         }

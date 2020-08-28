@@ -11,6 +11,7 @@ import configureStore  from '@redux/store';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { updateWebPartProperty, updateWebPartContext, updateWebPartDisplayMode } from '@redux/actions';
+import { WebPartProperties } from './WebPartProperties';
 
 export interface IAccordionWebPartProps {
   title: string;
@@ -38,10 +39,16 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IWebPartProp
     return super.onInit().then(_ => {
       this.store.dispatch(updateWebPartProperty('title', this.properties.title));
       this.store.dispatch(updateWebPartProperty('showTitle', this.properties.showTitle));
+      this.store.dispatch(updateWebPartProperty('allowMultipleExpanded', this.properties.allowMultipleExpanded));
+      this.store.dispatch(updateWebPartProperty('allowZeroExpaned', this.properties.allowZeroExpaned));
       this.store.dispatch(updateWebPartProperty('sections', this.properties.sections));
       this.store.dispatch(updateWebPartContext(this.context));
       this.store.dispatch(updateWebPartDisplayMode(this.displayMode));      
     });
+  }
+
+  protected onPropertyPaneFieldChanged(propertyPath: string, oldValue: any, newValue: any) {    
+    this.store.dispatch(updateWebPartProperty(propertyPath, newValue));
   }
 
   protected onDispose(): void {
@@ -63,9 +70,14 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IWebPartProp
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                })
+                WebPartProperties.ShowTitle
+              ]
+            }, 
+            {
+              groupName: "Accordion Settings",
+              groupFields: [
+                WebPartProperties.allowMultipleExpanded,
+                WebPartProperties.AllowZeroExpaned
               ]
             }
           ]

@@ -9,8 +9,7 @@ const loggerMiddleware = createLogger({level:'error'});
 export default function configureStore(callback) {
     const webPartMiddleWare = createWebPartMiddleWare(callback);
     const appStateStore: Store<IApplicationState, any> = createStore(appReducer,
-        applyMiddleware(webPartMiddleWare, loggerMiddleware));
-            //,loggerMiddleware));
+        applyMiddleware(webPartMiddleWare, loggerMiddleware));            
             
     return appStateStore;
 }

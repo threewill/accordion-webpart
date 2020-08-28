@@ -1,7 +1,6 @@
 import { IWebPartContext } from "@microsoft/sp-webpart-base";
 import { DisplayMode } from "@microsoft/sp-core-library";
 import { HttpRequestError } from "@pnp/odata";
-import { ISectionItem } from "@models";
 
 export enum ActionTypes {
   UPDATE_WEBPARTPROPERTY = 'UPDATE_WEBPARTPROPERTY',

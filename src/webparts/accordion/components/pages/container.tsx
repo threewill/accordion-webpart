@@ -11,13 +11,20 @@ import { SectionItem } from '@components/templates';
 
 interface IConnectedState{
   title: string;
+  showTitle: boolean;
+  allowMultipleExpanded: boolean;
+  allowZeroExpaned: boolean;
   displayMode: DisplayMode;
   sections: ISectionItem[];
+
 }
 
 const mapStateToProps = (state: IConnectedState) => {
   return {
     title: state.title,
+    showTitle: state.showTitle,
+    allowMultipleExpanded: state.allowMultipleExpanded,
+    allowZeroExpaned: state.allowZeroExpaned,
     displayMode: state.displayMode,
     sections: state.sections
   };
@@ -27,7 +34,7 @@ const component: React.FunctionComponent<IConnectedState> = props => {
   return (
     <div>
       <WebPartTitle displayMode={props.displayMode} title={props.title} className={styles.title} updateProperty={ undefined } />
-      <Accordion>
+      <Accordion allowMultipleExpanded={props.allowMultipleExpanded} allowZeroExpanded={props.allowZeroExpaned}>
         { props.sections.map( (s) => <SectionItem heading={s.heading} html={s.html} id={ s.id } key={s.id} /> ) }
       </Accordion>
       { props.displayMode === DisplayMode.Edit && <AddSectionButton /> }
