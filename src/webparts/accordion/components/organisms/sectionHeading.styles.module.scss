@@ -1,0 +1,23 @@
+.headerTextBox{
+    width: 60%;
+    max-width: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 20%;
+    left: 50px;
+}
+
+.removeButton{
+    position: absolute;
+    top: 15%;
+    right: 5px;
+    display: inline-block;
+
+    i {
+        color: red;
+    }
+}
+
+.editing{
+    position:relative;
+}

@@ -1,1 +1,3 @@
-export * from './SectionItem/sectionItem';
+export * from './addSectionButton';
+export * from './removeSectionButton';
+export * from './sectionContent';

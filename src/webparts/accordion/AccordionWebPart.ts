@@ -1,47 +1,28 @@
 import * as React from 'react';
-import { useState } from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
-import {
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'AccordionWebPartStrings';
-import { Container } from './components/organisms/container';
-import { IContainerProps } from './components/organisms/IContainerProps';
+import { Version } from '@microsoft/sp-core-library';
+import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import { Container } from '@components/pages';
 import { DisplayMode } from '@microsoft/sp-core-library';
-import { IWebPartProps, IApplicationState } from '@models';
-import configureStore  from './redux/store';
+import { IWebPartProps, IApplicationState, ISectionItem } from '@models';
+import configureStore  from '@redux/store';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { updateWebPartProperty, updateWebPartContext, updateWebPartDisplayMode, updateSections } from './redux/actions';
-
-export const store = configureStore();
+import { updateWebPartProperty, updateWebPartContext, updateWebPartDisplayMode } from '@redux/actions';
 
 export interface IAccordionWebPartProps {
+  title: string;
   description: string;
+  sections: ISectionItem[];
 }
 
 export default class AccordionWebPart extends BaseClientSideWebPart<IWebPartProps> {  
   private store: Store<IApplicationState, any>;  
 
   public render(): void {
-    // const element: React.ReactElement<IContainerProps> = React.createElement(
-    //   Container,
-    //   {
-    //     title: "Accordion Webpart",
-    //     items: [
-    //       {
-    //         heading: "Item 1 Heading",
-    //         html: "<p>Item 1 HTML</p>",
-    //         updateHtml: () => { }
-    //       }
-    //     ]
-    //   }
-    // );
-
-    const containerComponent: React.ReactElement<IContainerProps> = React.createElement(
+    const containerComponent: React.ReactElement = React.createElement(
       Container
     );
     
@@ -53,25 +34,13 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IWebPartProp
   }
 
   protected onInit(): Promise<void> {  
-    this.store = configureStore();
-    return super.onInit().then(_ => {      
-      // initialize the store with web part property values   
-      // this.store.dispatch(updateWebPartProperty('title', this.properties.title));
-      // this.store.dispatch(updateWebPartProperty('showTitle', this.properties.showTitle));
-      // this.store.dispatch(updateWebPartProperty('sites', this.properties.sections));
-      
-      // initialize the store with web part context
+    this.store = configureStore(this.saveProperties.bind(this));
+    return super.onInit().then(_ => {
+      this.store.dispatch(updateWebPartProperty('title', this.properties.title));
+      this.store.dispatch(updateWebPartProperty('showTitle', this.properties.showTitle));
+      this.store.dispatch(updateWebPartProperty('sections', this.properties.sections));
       this.store.dispatch(updateWebPartContext(this.context));
-
-      // initialize the store with display mode
-      this.store.dispatch(updateWebPartDisplayMode(this.displayMode));
-
-      this.store.dispatch(updateSections([
-        {
-          heading: "Section 1 Heading",
-          html: "<p>Hello Section 1</P"
-        }]
-      ));
+      this.store.dispatch(updateWebPartDisplayMode(this.displayMode));      
     });
   }
 
@@ -105,7 +74,11 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IWebPartProp
     };
   }
 
-  protected onDisplayModeChanged(){
-    this.render();
+  protected onDisplayModeChanged(displayMode:DisplayMode){
+    this.store.dispatch(updateWebPartDisplayMode(displayMode));
+  }
+
+  private saveProperties(propertyName: string, propertyValue:any){
+    this.properties[propertyName] = propertyValue;
   }
 }

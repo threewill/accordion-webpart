@@ -29,7 +29,9 @@
       "es2015.collection"
     ],
     "paths":{
-      "@models": ["models"]
+      "@models": ["models"],
+      "@redux/*": ["redux/*"],
+      "@components/*": ["components/*"]
     }
   },
   "include": [

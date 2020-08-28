@@ -7,19 +7,37 @@ const initialState: IApplicationState = {
 	title: ''
 	, showTitle: true
     , displayMode: DisplayMode.Read
-    , webPartContext: undefined
+	, webPartContext: undefined
+	, sections: []
 };
 
-//Reducer determines how the state should change after every action.
 export const appReducer: Reducer<IApplicationState> = (state: IApplicationState = initialState, action: Action): IApplicationState => {
 	switch (action.type) {
 		case ActionTypes.UPDATE_WEBPARTPROPERTY:
 			state = { ...state, [action.propertyName]: action.propertyValue };
 			break;
-		case ActionTypes.UPDATE_SECTIONS:
+		case ActionTypes.ADD_SECTION:
 			state = {
 				...state,
-				sections: action.sections,
+				sections: [...state.sections, { heading: null, html: null, id: state.sections.length }]
+			};
+			break;
+		case ActionTypes.UPDATE_SECTIONHEADER:
+			state = {
+				...state,				
+				sections: state.sections.map((s, i) => s.id === action.id ? {...s, heading: action.value } : s)
+			};
+			break;
+		case ActionTypes.UPDATE_SECTIONHTML:
+			state = {
+				...state,
+				sections: state.sections.map((s, i) => s.id === action.id ? { ...s, html: action.value } : s)
+			};
+			break;
+		case ActionTypes.DELETE_SECTION:
+			state = {
+				...state,
+				sections: state.sections.filter( x => x.id !== action.id)
 			};
 			break;
 		case ActionTypes.UPDATE_WEBPARTDISPLAYMODE:

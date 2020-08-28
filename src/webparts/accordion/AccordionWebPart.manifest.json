@@ -21,7 +21,9 @@
     "description": { "default": "Create collapsible sections that contain rich text" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "Accordion"
+      "title": "Accordion",
+      "description": "Create collapsible sections that contain rich text",
+      "sections": []
     }
   }]
 }
