@@ -14,6 +14,10 @@ export const createWebPartMiddleWare = (callback) => {
         else if( action.type === ActionTypes.UPDATE_WEBPARTPROPERTY)
         {
             callback(action.propertyName, action.propertyValue);
-        }        
+        }
+        else if( action.type === ActionTypes.UPDATE_WEBPARTTITLE)
+        {
+            callback("title", action.value);
+        }
     };
 };

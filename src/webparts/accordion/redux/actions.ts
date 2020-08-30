@@ -32,6 +32,11 @@ export const updateWebPartProperty = (propertyName: string, propertyValue: any):
   propertyValue
 });
 
+export const updateWebPartTitle = (value: string): Action => ({
+  type: ActionTypes.UPDATE_WEBPARTTITLE,
+  value
+});
+
 export const updateWebPartContext = (webPartContext: IWebPartContext): Action => ({
   type: ActionTypes.UPDATE_WEBPARTCONTEXT,
   webPartContext
