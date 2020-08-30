@@ -29,7 +29,7 @@ const component: React.FunctionComponent<IEditorProps & IConnectedDispatch> = pr
         props.updateSectionHTML(props.parentSectionID, value);
     };
     return (
-        <Editor init={initProps} value={props.html} onEditorChange={ changeHandler }/>
+        <Editor apiKey={ process.env.TINYMCE_API_KEY } init={ initProps } value={ props.html } onEditorChange={ changeHandler }/>
     );
 };
 
